@@ -38,9 +38,31 @@ This pilot uses the [Docker](https://www.docker.com/) containerization engine to
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/) provides a GUI interface to manage containers and associated images. The utility is available on all operating systems: Windows (Intel and ARM), MacOS (Intel and Arm), and Linux.
 * Specific to Linux, you can install [Docker Engine](https://docs.docker.com/engine/install/), also known as Docker Community Edition. Complete details on supported Linux distributions and installation procedures can be found in the aforementioned link.
 
-### Building & Executing Application Container
+### Building Application Container
 
-TBD
+Navigate to the root directory of the repository on your system, and run the following command:
+
+```
+docker build -t RConsortium/submissions-pilot4-container:latest .
+```
+
+### Running Application Container
+
+Run the following command in a terminal:
+
+```
+docker run -it --rm -p 8787:8787 RConsortium/submissions-pilot4-container:latest
+```
+
+Next, open a new browser tab and visit the following address: `localhost:8787`. You should see the Pilot 2 application appear in the browser tab.
+
+Additional notes:
+
+* If you prefer to use a different port on your host system to serve the application, you can change the first port number in the `-p 8787:8787` flag of the run command. For example, if you wish to use the port number `7777` on your host system, the run command would be the following:
+
+```
+docker run -it --rm -p 7777:8787 RConsortium/submissions-pilot4-container:latest
+```
 
 ### Assembling eCTD Bundle
 
