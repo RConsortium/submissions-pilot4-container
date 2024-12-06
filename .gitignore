@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.tgz
+*.rds
+_site
+ectd_bundle/*
+!ectd_bundle/README.md
