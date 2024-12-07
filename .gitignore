@@ -7,3 +7,4 @@
 _site
 ectd_bundle/*
 !ectd_bundle/README.md
+result

@@ -56,6 +56,8 @@ docker run -it --rm -p 8787:8787 RConsortium/submissions-pilot4-container:latest
 
 Next, open a new browser tab and visit the following address: `localhost:8787`. You should see the Pilot 2 application appear in the browser tab.
 
+When you are finished using the application, close the browser tab and then stop the Docker container process by visiting the terminal running the container and pressing `Ctrl+C` on your keyboard.
+
 Additional notes:
 
 * If you prefer to use a different port on your host system to serve the application, you can change the first port number in the `-p 8787:8787` flag of the run command. For example, if you wish to use the port number `7777` on your host system, the run command would be the following:
