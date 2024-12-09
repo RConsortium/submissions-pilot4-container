@@ -471,39 +471,81 @@ The R scripts and supporting files for the Shiny application are contained in th
 \appendix
 \renewcommand{\thesection}{A}
 ```
+
 # Appendix 1: Pilot 4 Shiny Application Installation and Usage {#sec-a1}
 
 To install and execute the Shiny application, follow all of the procedures below. Ensure that you note the location of where you downloaded the Pilot 4 eCTD submission files. For demonstration purposes, the procedures below assume the transfer has been saved to this location: `C:\pilot4`.
 
-## Installation of R and RStudio
+## Windows Subsystem for Linux (WSL)
 
-Download and install R 4.4.1 for Windows from <https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe>. While optional, it is also recommended to use RStudio IDE for executing R code to launch the application. You can download RStudio for Windows by visiting <https://posit.co/download/rstudio-desktop/#download>.
+### Verification of WSL Availability
+
+To execute a container on a Windows system, the Windows Subsystem for Linux (WSL) must be installed on the system. To determine if WSL is available on your system, use the following procedure:
+
+1. Open the Windows Powershell program by searching for Windows Powershell in the Windows Start menu.
+1. Run the following command:
+
+``` sh
+wsl --list --verbose
+```
+
+If the command results in output displaying the arguments to `wsl.exe`, you will need to install WSL using the procedure in the following section. However, if a list of Linuc distributions is displayed instead, you can proceed to the section **Installation of Docker Desktop**.
+
+### Installation of WSL
+
+1. Open the Windows Powershell program as Administrator by searching for Windows Powershell in the Windows Start menu.
+1. Run the following command:
+
+``` sh
+wsl --install
+```
+
+Depending on network connection and system resources, the installation may take a few minutes.
+
+Upon successful installation, you should see the following output in the terminal window:
+
+``` sh
+Installing: Virtual Machine Platform
+Virtual Machine Platform has been installed.
+Installing: Windows Subsystem for Linux
+Windows Subsystem for Linux has been installed.
+Installing: Ubuntu
+Ubuntu has been installed.
+The requested operation is successful. Changes will not be effective until the system is rebooted.
+```
+
+1. Restart your system.
 
 ::: callout-info
-When launching RStudio for the first time, you may be prompted to select the version of R to use. Ensure that the default selection of __Use your machine's default 64-bit version of R__ is selected and click OK.
+After the reboot is complete, you will see a brief appearance of the PowerShell terminal window. This is simply to complete the installation and is normal.
 :::
 
-## Installation of Rtools
+TODO: Verify the following block is needed
 
-Due to certain R packages requiring compilation from source, it is also required that you install the **Rtools** Windows utility from CRAN. You can download Rtools built for R version `4.4.1` by visiting <https://cloud.r-project.org/bin/windows/Rtools/rtools44/files/rtools44-6104-6039.exe>. During the installation procedure, keep the default choices in the settings presented in the installation dialog.
+1. The WSL utility must have a Linux distribution installed before it can operate with additional tools. In certain situations, a Linux distribution will be installed as part of the overall installation process. To install the Ubuntu Linux Distribution inside WSL, use the following procedure:
 
-Once the installation is complete, launch a new R session (if you have an existing session open, close that session first) and in the console, run the following command that should give the location of your Rtools installation:
+1. Open the Windows Powershell program by searching for Windows Powershell in the Windows Start menu.
+1. Run the following command:
 
-``` r
-Sys.which("make")
-"C:\\rtools44\\usr\\bin\\make.exe" 
+``` sh
+wsl --install Ubuntu
 ```
 
-## Installation of R Packages
+## Docker Desktop
 
-A minimum set of R packages are required to ensure the Pilot 2 Shiny application files are successfully unpacked and the custom package environment used for the application is replicated correctly. The first package to install is the `remotes` package:
+The container runtime used in this application is Docker. To utilized Docker on a Windows-based system, it is recommended to install the official [Docker Desktop](https://www.docker.com/products/docker-desktop/) utility.
 
-``` r
-install.packages("remotes")
+### Installation of Docker Desktop
 
-# install version 1.0.7 of the renv package:
-remotes::install_version("renv", version = "1.0.7")
-```
+1. Visit the Docker Desktop web site <https://www.docker.com/products/docker-desktop/> and click the **Download Docker Desktop** button. A small window appears with links to the different versions based on operating system. Click the entry **Download for Windows - AMD64** to download the installer for Windows.
+1. After the download is complete, locate the file `Docker Desktop Installer.exe` and open the file to begin the installation process. Ensure that the options **Use WSL 2 instead of Hyper-V (recommended)** and **Add shortcut to desktop** are selected, and then click the OK button.
+1. The installation will unpack and copy the necessary files. Once it is complete, the installer will display a message saying the installation succeeded. Click the **Close and restart** button to restart your system.
+1. After the restart is complete, a new window appears asking for confirmation of the Docker Subscription Service Agreement. Click the Accept button.
+1. Launch the Docker Desktop program by double-clicking the desktop icon called **Docker Desktop**
+1. A new window appears with the title **Welcome to Docker** with a question regarding the use of Docker for work. This is an optional step and it is recommended to click the **Skip** link in the upper-right corner.
+1. The window displays a Welcome Survey. This is an optional step. Click the **Skip** link in the upper-right corner.
+1. The default Docker Desktop interface appears. You can safely close the window, as the Docker process will still run in the system background.
+
 
 ## Extract Application Bundle
 
