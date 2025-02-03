@@ -3,16 +3,10 @@ library(rix)
 
 rix(
   r_ver = "4.4.0",
-  r_pkgs = c("dplyr", "kableExtra", "magrittr", "desc", "purrr", "renv"),
-  system_pkgs = NULL,
-#  git_pkgs = list(
-#    list(
-#      package_name = "pkginfo",
-#      repo_url = "https://github.com/rsquaredacademy/pkginfo",
-#      commit = "8a716283eaf53b07130cc5a943cc048db3919ce6"
-#    )
-#  ),
-  ide = "code",
+  r_pkgs = c("dplyr", "kableExtra", "magrittr", "desc", "purrr", "renv", "quarto"),
+  system_pkgs = c("dejavu_fonts", "quarto"),
+  tex_pkgs = c("amsmath", "framed", "multirow", "wrapfig", "tabu", "threeparttable", "threeparttablex", "environ", "makecell", "tcolorbox", "tikzfill", "pdfcol", "fontawesome5"),
+  ide = "other",
   project_path = ".",
   overwrite = TRUE,
   print = TRUE
