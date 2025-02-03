@@ -5,9 +5,9 @@ ARG IMAGE_ORG=rocker
 FROM $IMAGE_REGISTRY/$IMAGE_ORG/r-ver:$R_VERSION
 
 LABEL org.opencontainers.image.licenses="GPL-3.0-or-later" \
-      org.opencontainers.image.source="https://github.com/Appsilon/experimental-fda-submission-4-podman" \
-      org.opencontainers.image.vendor="Appsilon" \
-      org.opencontainers.image.authors="André Veríssimo <andre.verissimo@appsilon.com>, Vedha Viyash <vedha@appsilon.com>"
+      org.opencontainers.image.source="https://github.com/RConsortium/submissions-pilot4-container" \
+      org.opencontainers.image.vendors="RConsortium, Appsilon" \
+      org.opencontainers.image.authors="Eric Nantz <theRcast@gmail.com>, André Veríssimo <andre.verissimo@appsilon.com>, Vedha Viyash <vedha@appsilon.com>"
 
 RUN apt-get update --quiet \
    && apt-get install \
@@ -26,10 +26,13 @@ RUN useradd -m shiny
 
 USER shiny
 
-ARG LOCAL_DIR=./submissions-pilot2
+ARG LOCAL_APP_DIR=./submissions-pilot2
+ARG LOCAL_DATA_DIR=./datasets
 ARG APP_DIR=/home/shiny/submissions-pilot2
+ARG DATA_DIR=/home/shiny/submissions-pilot2/datasets
 
-COPY $LOCAL_DIR $APP_DIR
+COPY $LOCAL_APP_DIR $APP_DIR
+COPY $LOCAL_DATA_DIR $DATA_DIR
 
 WORKDIR $APP_DIR
 
