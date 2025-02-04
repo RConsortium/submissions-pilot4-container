@@ -9,7 +9,10 @@ This repository addresses the **container** version of the application.
 
 ## Important Links
 
-TBD
+* Repository with ECTD materials: <https://github.com/RConsortium/submissions-pilot4-container-to-fda>
+* Preview version of the Analysis Data Reviewer Guide (ADRG):
+    * HTML Format: <https://rpodcast.quarto.pub/pilot4-container-adrg/>
+    * PDF Format: <https://rsubmission-draft.us-east-1.linodeobjects.com/pilot4-container-adrg.pdf>
 
 ## Development Setup
 
@@ -66,13 +69,12 @@ Additional notes:
 docker run -it --rm -p 7777:8787 RConsortium/submissions-pilot4-container:latest
 ```
 
-### Assembling eCTD Bundle
+### Automation
 
-TBD
+A set of GitHub actions have been created to automate the following processes:
 
-### Automation 
+* [`publish-ectd-bundle.yaml`](https://github.com/RConsortium/submissions-pilot4-container/blob/main/.github/workflows/publish-ectd-bundle.yaml): Compile the eCTD collection of the submissions files and automatically commit the bundle to the `main` branch of the [Pilot 4 Container ECTD GitHub repository](https://github.com/RConsortium/submissions-pilot4-container-to-fda). In addition, automatically publish the ADRG HTML and PDF versions to their respective preview locations.
 
-TBD
 
 ### Acknowledgement
 
