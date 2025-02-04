@@ -68,8 +68,8 @@ jobs:
         - name: Check out ECTD bundle destination repo
           uses: actions/checkout@v4
           with:
-            repository: RConsortium/submissions-pilot4-webR-to-fda
-            path: ./submissions-pilot4-webR-to-fda
+            repository: RConsortium/submissions-pilot4-container-to-fda
+            path: ./submissions-pilot4-container-to-fda
             token: ${{ secrets.API_TOKEN_GITHUB }}
   
         - name: Create ECTD bundle
