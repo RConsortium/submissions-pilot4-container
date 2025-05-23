@@ -4,8 +4,7 @@ on:
       branches:
         - main
       paths:
-        - 'entrypoint.R'
-        - 'Dockerfile'
+        - 'Dockerfile.txt'
         - 'ectd_readme/README.qmd'
         - 'adrg/_adrg.qmd'
         - 'cover-letter/cover-letter.qmd'
@@ -44,6 +43,12 @@ jobs:
           run: |
             nix-shell --run 'quarto render adrg/adrg-quarto-pdf.qmd --to pdf'
           shell: bash
+
+        - name: Publish ADRG HTML to QuartoPub
+          env:
+            QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+          run: |
+            nix-shell --run 'cd adrg; quarto publish --no-prompt --no-browser adrg-quarto-html.qmd'
   
         - name: Render ECTD README (custom)
           env:
@@ -64,7 +69,15 @@ jobs:
             region: 'us-east-1'
             access_key: ${{ secrets.S3_ACCESS_KEY }}
             secret_key: ${{ secrets.S3_SECRET_KEY }}
-  
+
+        - name: Publish ADRG PDF to object storage
+          run: |
+            s3cmd put adrg/adrg-quarto-pdf.pdf --mime-type 'application/pdf' --acl-public s3://rsubmission-draft/pilot4-container-adrg.pdf
+
+        - name: Compile pkglite file (custom)
+          run: |
+            nix-shell --run "Rscript -e \"source('dev/utils.R'); create_app_pkglite_bundle()\""
+
         - name: Check out ECTD bundle destination repo
           uses: actions/checkout@v4
           with:

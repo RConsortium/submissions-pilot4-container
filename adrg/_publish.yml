@@ -1,0 +1,4 @@
+- source: adrg-quarto-html.qmd
+  quarto-pub:
+    - id: 90ddb40a-2e7b-4ee1-a566-b849258edfdc
+      url: 'https://rpodcast.quarto.pub/pilot4-container-adrg'
