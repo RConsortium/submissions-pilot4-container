@@ -1,48 +1,48 @@
 create_app_pkglite_bundle <- function(app_dir = "submissions-pilot2") {
   # define specifications for shiny app bundle
-  app_spec <- file_spec(
+  app_spec <- pkglite::file_spec(
     ".", 
     pattern = "\\.R$|\\.r$", 
     format = "text", 
     recursive = FALSE
   )
   
-  app_source_spec <- file_spec(
+  app_source_spec <- pkglite::file_spec(
     "R",
     pattern = "\\.R",
     format = "text",
     recursive = FALSE
   )
   
-  renv_spec <- file_spec(
+  renv_spec <- pkglite::file_spec(
     ".",
     pattern = "\\.lock",
     format = "text",
     recursive = FALSE
   )
   
-  renv_spec2 <- file_spec(
+  renv_spec2 <- pkglite::file_spec(
     "renv",
     pattern = "\\.R$",
     format = "text",
     recursive = FALSE
   )
   
-  renv_spec3 <- file_spec(
+  renv_spec3 <- pkglite::file_spec(
     "renv/cellar",
     pattern = "\\.tar.gz|\\.zip",
     format = "binary",
     recursive = TRUE
   )
   
-  golem_spec <- file_spec(
+  golem_spec <- pkglite::file_spec(
     "dev",
     pattern = "^run",
     format = "text",
     recursive = FALSE
   )
   
-  file_ectd2 <- file_spec(
+  file_ectd2 <- pkglite::file_spec(
     ".",
     pattern = "^DESCRIPTION$|^NAMESPACE$|^README$|^README\\.md$|^NEWS$|^NEWS\\.md$|^LICENSE$|\\.Rbuildignore$|\\.Rprofile$|\\.Renviron$",
     format = "text",
