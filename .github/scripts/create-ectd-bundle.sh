@@ -8,8 +8,10 @@ function l { # Log a message to the terminal.
 }
 
 # Define file and directory paths
+PKGLITE_SOURCE_DIR=dev
+PKGLITE_SOURCE_FILE=r1pkg.txt
 APP_SOURCE_DIR=submissions-pilot2
-DOCKER_SOURCE_FILE=Dockerfile
+DOCKER_SOURCE_FILE=Dockerfile.txt
 ENTRYPOINT_FILE=entrypoint.R
 ECTD_BUNDLE_DIR=submissions-pilot4-container-to-fda
 ECTD_LETTER_DIR=${ECTD_BUNDLE_DIR}/m1/us
@@ -71,35 +73,42 @@ fi
 echo "Cover letter copied to ${LETTER_DESTINATION_DIR}/${LETTER_DEST_FILE}"
 echo "${APP_SOURCE_DIR}"
 
-# Copy pilot 2 application files
-if [ -d "$APP_SOURCE_DIR" ]; then
-  echo "Copying application files"
-  if [ ! -f "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}" ]; then
-    echo "Create application directory ${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}"
-    mkdir -p "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}"
-    mkdir -p "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst"
-  fi
-  cp -r "${APP_SOURCE_DIR}/inst/app" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst/app"
-  cp "${APP_SOURCE_DIR}/inst/golem-config.yml" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst/golem-config.yml"
-  cp "${APP_SOURCE_DIR}/inst/startup.R" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst/startup.R"
-  cp -r "${APP_SOURCE_DIR}/man" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/man"
-  cp -r "${APP_SOURCE_DIR}/R" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/R"
-  cp -r "${APP_SOURCE_DIR}/renv" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/renv"
-  cp "${APP_SOURCE_DIR}/.Rprofile" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/.Rprofile"
-  cp "${APP_SOURCE_DIR}/.Rbuildignore" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/.Rbuildignore"
-  cp "${APP_SOURCE_DIR}/app.R" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/app.R"
-  cp "${APP_SOURCE_DIR}/DESCRIPTION" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/DESCRIPTION"
-  cp "${APP_SOURCE_DIR}/LICENSE.md" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/LICENSE.md"
-  cp "${APP_SOURCE_DIR}/NAMESPACE" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/NAMESPACE"
-  cp "${APP_SOURCE_DIR}/NEWS.md" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/NEWS.md"
-  cp "${APP_SOURCE_DIR}/README.md" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/README.md"
-  cp "${APP_SOURCE_DIR}/renv.lock" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/renv.lock"
-  cp "${APP_SOURCE_DIR}/submissions-pilot2.Rproj" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/submissions-pilot2.Rproj"
-
-  echo "Copying Docker container files"
+# Copy pilot 2 app pkglite file and Dockerfile
+if [ -f "${PKGLITE_SOURCE_DIR}/${PKGLITE_SOURCE_FILE}" ]; then
+  echo "Copying ${PKGLITE_SOURCE_DIR}/${PKGLITE_SOURCE_FILE}"
+  cp "${PKGLITE_SOURCE_DIR}/${PKGLITE_SOURCE_FILE}" "${ECTD_PROGRAMS_DIR}/${PKGLITE_SOURCE_FILE}"
   cp "${DOCKER_SOURCE_FILE}" "${ECTD_PROGRAMS_DIR}/${DOCKER_SOURCE_FILE}"
-  cp "${ENTRYPOINT_FILE}" "${ECTD_PROGRAMS_DIR}/${ENTRYPOINT_FILE}"
 fi
+
+# Copy pilot 2 application files
+# if [ -d "$APP_SOURCE_DIR" ]; then
+#   echo "Copying application files"
+#   if [ ! -f "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}" ]; then
+#     echo "Create application directory ${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}"
+#     mkdir -p "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}"
+#     mkdir -p "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst"
+#   fi
+#   cp -r "${APP_SOURCE_DIR}/inst/app" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst/app"
+#   cp "${APP_SOURCE_DIR}/inst/golem-config.yml" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst/golem-config.yml"
+#   cp "${APP_SOURCE_DIR}/inst/startup.R" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/inst/startup.R"
+#   cp -r "${APP_SOURCE_DIR}/man" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/man"
+#   cp -r "${APP_SOURCE_DIR}/R" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/R"
+#   cp -r "${APP_SOURCE_DIR}/renv" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/renv"
+#   cp "${APP_SOURCE_DIR}/.Rprofile" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/.Rprofile"
+#   cp "${APP_SOURCE_DIR}/.Rbuildignore" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/.Rbuildignore"
+#   cp "${APP_SOURCE_DIR}/app.R" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/app.R"
+#   cp "${APP_SOURCE_DIR}/DESCRIPTION" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/DESCRIPTION"
+#   cp "${APP_SOURCE_DIR}/LICENSE.md" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/LICENSE.md"
+#   cp "${APP_SOURCE_DIR}/NAMESPACE" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/NAMESPACE"
+#   cp "${APP_SOURCE_DIR}/NEWS.md" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/NEWS.md"
+#   cp "${APP_SOURCE_DIR}/README.md" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/README.md"
+#   cp "${APP_SOURCE_DIR}/renv.lock" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/renv.lock"
+#   cp "${APP_SOURCE_DIR}/submissions-pilot2.Rproj" "${ECTD_PROGRAMS_DIR}/${APP_SOURCE_DIR}/submissions-pilot2.Rproj"
+
+#   echo "Copying Docker container files"
+#   cp "${DOCKER_SOURCE_FILE}" "${ECTD_PROGRAMS_DIR}/${DOCKER_SOURCE_FILE}"
+#   cp "${ENTRYPOINT_FILE}" "${ECTD_PROGRAMS_DIR}/${ENTRYPOINT_FILE}"
+# fi
 
 # Copy pilot 2 data files
 if [ -d "$DATASETS_SOURCE_DIR" ]; then
