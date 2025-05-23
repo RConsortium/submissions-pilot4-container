@@ -42,8 +42,4 @@ RUN Rscript \
   -e "options(\"renv.config.install.remotes\" = FALSE)" \
   -e "renv::restore()"
 
-ARG R_SCRIPT=./entrypoint.R
-
-COPY $R_SCRIPT $APP_DIR/entrypoint.R
-
-CMD ["Rscript", "entrypoint.R"]
+CMD ["R", "-e", "options(shiny.port = 8787, shiny.host = '0.0.0.0'); pkgload::load_all(export_all = FALSE,helpers = FALSE,attach_testthat = FALSE);options('golem.app.prod' = TRUE); pilot2wrappers::run_app()"]
