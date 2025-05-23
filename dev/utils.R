@@ -54,7 +54,7 @@ create_app_pkglite_bundle <- function(app_dir = "submissions-pilot2") {
   pkglite::collate(
     pkg = app_dir,
     file_ectd2,
-    file_auto("inst"), 
+    pkglite::file_auto("inst"), 
     app_spec, 
     app_source_spec,
     renv_spec,
