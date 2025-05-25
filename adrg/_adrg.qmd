@@ -274,74 +274,39 @@ Not Applicable. This pilot project only submits programs for analysis results.
 
 ## Analysis Output Programs {#sec-analysisoutput}
 
-The Shiny application included in this pilot follows a different structure than a traditional collection of analysis programs such as those included in the Pilot 1 eCTD transfer. In addition, the framework used for assembling the Shiny application modules is different than the framework used in the Pilot 2 eCTD transfer. The application is developed with a modular approach and assembled with the [`rhino`](https://appsilon.github.io/rhino/) R package for enhanced code organization. At the time of this submission, the [`golem`](https://thinkr-open.github.io/golem/) R package (used by Pilot 2) is not supported by [`webR`](https://docs.r-wasm.org/webr/latest/). A description of the primary scripts used within the application is given in the table below.
+The Shiny application included in this pilot follows a different structure than a traditional collection of analysis programs such as those included in the Pilot 1 eCTD transfer. The application is developed with a modular approach and assembled with the [`golem`](https://thinkr-open.github.io/golem) R package for enhanced code organization. A description of the primary scripts used within the application is given in the table below. The recommended steps to execute the Shiny application are described in Appendix 2.
 
 ```{r}
-#| label: pilot4-programs
-#| eval: true
-pilot4_programs_df <- tibble::tribble(
-  ~name, ~directory, ~purpose,
-  "app.R", "", "Facilitate execution of Shiny application",
-  "adam_data.R", "logic", "Functions to import AdAM data files",
-  "eff_models.R", "logic", "Functions to perform statistical models and inferences used in output tables",
-  "formatters.R", "logic", "Functions to perform formatting of numerical results",
-  "helpers.R", "logic", "Supporting functions related to table output formatting and other operations",
-  "kmplot_helpers.R", "logic", "Functions to support creation of Kaplan-Meier plot",
-  "Tplyr_helpers.R", "logic", "Functions to support nesting of row labels in summary tables produced by the Tplyr package",
-  "completion_table.R", "views", "Shiny module for visit completion summary table",
-  "demographic_table.R", "views", "Shiny module for demographic summary table",
-  "efficacy_table", "views", "Shiny module for secondary endpoints efficacy table",
-  "km_plot_filter.R", "views", "Shiny module for data filter widgets used in Kaplan-Meier visualization module",
-  "km_plot.R", "views", "Shiny module for Kaplan-Meier visualization",
-  "primary_table.R", "views", "Shiny module for primary efficacy analysis summary table",
-  "user_guide.R", "views", "Shiny module for application user guide"
+#| label: pilot2-programs
+pilot2_programs_df <- tibble::tibble(
+  name = c("app.R", "app_teal.R", "tm_t_demographic.R", "tm_g_kmplot.R", "tm_t_primary.R", "tm_t_efficacy.R", "tm_t_disposition.R"),
+  purpose = c("Facilitate execution of Shiny application in a local R session or deployed on a server",
+              "Assemble the application modules for use with the Teal package",
+              "Shiny module for demographic and baseline characteristics analysis",
+              "Shiny module for Kaplan-Meier plot of time to first dermatologic event",
+              "Shiny module for primary endpoint analysis ADAS Cog (11)",
+              "Shiny module for primary endpoint analysis Glucose (mmol/L)",
+              "Shiny module for summary of number of patients completing each visit in treatment period")
 )
 
-pilot4_programs_df_kbl <- kbl(
-  pilot4_programs_df,
-  col.names = c("Program Name", "Directory", "Purpose")
+pilot2_programs_df_kbl <- kbl(
+  pilot2_programs_df,
+  col.names = c("Program Name", "Purpose")
 )
 
-pilot4_programs_df_kbl %>%
-  kable_styling(latex_options = c("scale_down", "hold_position")) %>%
+pilot2_programs_df_kbl %>%
+  kable_styling(latex_options = c("HOLD_position")) %>%
   column_spec(1, width = "10em") %>%
-  column_spec(2, width = "5em") %>%
-  column_spec(3, width = "35em")
+  column_spec(2, width = "20em")
 ```
 
-## Application Execution Functions
+## Container Build Instructions
 
-An additional set of R functions are included in the `utils.R` script to support creating and executing the web-assembly version of the application. Descriptions of the key functions are included in the table below. The recommended steps to execute the Shiny application with these functions (along with preparing your environment for evaluating the application) are outlined in @sec-a1.
-
-```{r}
-#| label: pilot4-support-functions
-#| eval: true
-pilot4_functions_df <- tibble::tribble(
-  ~name, ~purpose,
-  "build_app", "Create the web-assembly application bundle directly from the Shiny application files",
-  "extract_app_bundle", "Extract the pre-compiled bundle of the web-assembly version of the Shiny application",
-  "run_app_webassembly", "Launch the web-assembly version of the application in a separate web process",
-  "run_app_shiny", "Launch the Shiny application using the traditional Shiny process inside the R session"
-)
-
-pilot4_functions_df_kbl <- kbl(
-  pilot4_functions_df,
-  col.names = c("Function Name", "Purpose")
-)
-
-pilot4_functions_df_kbl %>%
-  kable_styling(latex_options = c("scale_down", "hold_position")) %>%
-  column_spec(1, width = "10em") %>%
-  column_spec(2, width = "25em")
-```
+This pilot submission uses the [Docker](https://www.docker.com/) container runtime for the building and execution of the Shiny application within a container. Included in this submission is a file called `Dockerfile.txt` which contains the required steps to configure an environment inside the container with the necessary dependencies to run the Shiny application. The required procedures to create this container are aoutlined in @sec-a1.
 
 ## Open-source R Analysis Packages
 
 The following table lists the open-source R packages used to create and execute the Shiny application in this pilot.
-
-::: callout-note
-While the rhino package was used to create the application structure, it is not required to execute the application and thus was not included in the table.
-:::
 
 ```{r}
 #| label: open-packages-pilot4
@@ -391,25 +356,27 @@ Not Applicable. This pilot project displays analysis output as a Shiny applicati
 
 Study datasets and the Shiny application supportive files are organized in accordance to Study Data Technical Conformance Guide.
 
-TODO: Update tree output to include content from programs directory
 
     ├── m1
-    │   └── us
-    │       └── cover-letter.pdf
-    └── m5
-        └── datasets
-            └── rconsortiumpilot4container
-                └── analysis
-                    └── adam
-                        ├── datasets
-                        │   ├── adadas.xpt
-                        │   ├── adlbc.xpt
-                        │   ├── adsl.xpt
-                        │   ├── adtte.xpt
-                        │   ├── define2-0-0.xsl
-                        │   └── define.xml
-                        └── programs
-                            └── r4app.zip
+    │   └── us
+    │       └── cover-letter.pdf
+    ├── m5
+    │   └── datasets
+    │       └── rconsortiumpilot4container
+    │           └── analysis
+    │               └── adam
+    │                   ├── datasets
+    │                   │   ├── adadas.xpt
+    │                   │   ├── adlbc.xpt
+    │                   │   ├── adrg.pdf
+    │                   │   ├── adsl.xpt
+    │                   │   ├── adtte.xpt
+    │                   │   ├── define2-0-0.xsl
+    │                   │   └── define.xml
+    │                   └── programs
+    │                       ├── Dockerfile.txt
+    │                       └── r1pkg.txt
+
 
 ```{r}
 #| label: pilot4-dir-structure
@@ -419,7 +386,7 @@ TODO: Update tree output to include content from programs directory
 dir_df <- tibble::tibble(
   name = c("module", "  datasets", "    rconsortiumpilot4container", "    analysis", "      adam", "      datasets", "      programs"),
   index = 1:7,
-  desc = c("Refers to the eCTD module in which clinical study data is being submitted.", "Resides within the module folder as the top-level folder for clinical study data being submitted for m5.", "Study identifier or analysis type performed", "Contains folders for analysis datasets and software programs; arrange in designated level 6 subfolders", "Contains subfolders for ADaM datasets and corresponding software programs", "Contains ADaM datasets, analysis data reviewer’s guide, analysis results metadata and define files", "Contains Shiny application source files bundled as a zip archive")
+  desc = c("Refers to the eCTD module in which clinical study data is being submitted.", "Resides within the module folder as the top-level folder for clinical study data being submitted for m5.", "Study identifier or analysis type performed", "Contains folders for analysis datasets and software programs; arrange in designated level 6 subfolders", "Contains subfolders for ADaM datasets and corresponding software programs", "Contains ADaM datasets, analysis data reviewer’s guide, analysis results metadata and define files", "Contains Shiny application source files bundled as a `pkglite` text file and Docker container build instructions.")
 )
 
 dir_df_kbl <- kbl(
@@ -450,11 +417,6 @@ dir_df_kbl %>%
 :::
 
 
-The R scripts and supporting files for the Shiny application are contained in the `submissions-pilot2` directory with the following structure (the output below has been truncated for brevity):
-
-TODO: Copy over output from `tree` program for the listing inside `submissions-pilot2` folder
-
-
 ```{=tex}
 \appendix
 \renewcommand{\thesection}{A}
@@ -462,7 +424,7 @@ TODO: Copy over output from `tree` program for the listing inside `submissions-p
 
 # Appendix 1: Pilot 4 Shiny Application Installation and Usage {#sec-a1}
 
-To install and execute the Shiny application, follow all of the procedures below. Ensure that you note the location of where you downloaded the Pilot 4 eCTD submission files. For demonstration purposes, the procedures below assume the transfer has been saved to this location: `C:\pilot4`.
+To install and execute the Shiny application, follow all of the procedures below. Ensure that you note the location of where you downloaded the Pilot 4 eCTD submission files. For demonstration purposes, the procedures below assume the transfer has been saved to this location: `C:\pilot4container`.
 
 ## Windows Subsystem for Linux (WSL)
 
@@ -477,7 +439,7 @@ To execute a container on a Windows system, the Windows Subsystem for Linux (WSL
 wsl --list --verbose
 ```
 
-If the command results in output displaying the arguments to `wsl.exe`, you will need to install WSL using the procedure in the following section. However, if a list of Linuc distributions is displayed instead, you can proceed to the section **Installation of Docker Desktop**.
+If the command results in output displaying the arguments to `wsl.exe`, you will need to install WSL using the procedure in the following section. However, if a list of Linuc distributions is displayed instead, you can proceed to the section {@sec-dockerinstall}.
 
 ### Installation of WSL
 
@@ -523,7 +485,7 @@ wsl --install Ubuntu
 
 The container runtime used in this application is Docker. To utilized Docker on a Windows-based system, it is recommended to install the official [Docker Desktop](https://www.docker.com/products/docker-desktop/) utility.
 
-### Installation of Docker Desktop
+### Installation of Docker Desktop {#sec-dockerinstall}
 
 1. Visit the Docker Desktop web site <https://www.docker.com/products/docker-desktop/> and click the **Download Docker Desktop** button. A small window appears with links to the different versions based on operating system. Click the entry **Download for Windows - AMD64** to download the installer for Windows.
 1. After the download is complete, locate the file `Docker Desktop Installer.exe` and open the file to begin the installation process. Ensure that the options **Use WSL 2 instead of Hyper-V (recommended)** and **Add shortcut to desktop** are selected, and then click the OK button.
@@ -534,25 +496,104 @@ The container runtime used in this application is Docker. To utilized Docker on 
 1. The window displays a Welcome Survey. This is an optional step. Click the **Skip** link in the upper-right corner.
 1. The default Docker Desktop interface appears. You can safely close the window, as the Docker process will still run in the system background.
 
-## Build Docker Image
+## Installation of R and RStudio
 
-TODO: Clean up
+Download and install R 4.4.1 for Windows from <https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe>. While optional, it is also recommended to use RStudio IDE for executing R code to launch the application. You can download RStudio for Windows by visiting <https://posit.co/download/rstudio-desktop/#download>.
 
-* Navigate to `m5/datasets/rconsortiumpilot4container/analysis/adam`
-* Run following command to build image (TODO: See if line breaks with `\` work in Windows Powershell)
+::: callout-info
+When launching RStudio for the first time, you may be prompted to select the version of R to use. Ensure that the default selection of __Use your machine's default 64-bit version of R__ is selected and click OK.
+:::
 
+## Installation of R Packages
+
+A minimum set of R packages are required to ensure the Pilot 4 Shiny application files are successfully unpacked and the custom package environment used for the application is replicated correctly. Run the following commands in the R console to install the `remotes` and `pkglite` packages:
+
+``` r
+install.packages("remotes")
+
+# install version 1.0.7 of the renv package:
+remotes::install_version("pkglite", version = "0.2.2")
 ```
-docker build --build-arg LOCAL_DATA_DIR=datasets --build-arg LOCAL_APP_DIR=programs/submissions-pilot2 --build-arg R_SCRIPT=programs/entrypoint.R -t RConsortium/submissions-pilot4-container:latest -f programs/Dockerfile .
+
+## Extract Application Bundle
+
+Use the `pkglite` package to unpack the Shiny application bundle `r1pkg.txt` within the Pilot 4 eCTD submission transfer. This file is located in the following relative path within the eCTD transfer directory:
+
+``` sh
+m5\datasets\rconsortiumpilot4\analysis\adam\programs\r1pkg.txt
 ```
 
-## Run Application
+Enter the following command in the R console to extract the Shiny application files to the destination directory.
 
-TODO: Clean up
+``` r
+pkglite::unpack(
+  input = "C:/pilot4container/m5/datasets/rconsortiumpilot4/analysis/adam/programs/r1pkg.txt", 
+  output = "C:/pilot4container_files"
+)
+```
+
+The console will display messages of unpacking and writing files to the destination directory. Note that the procedure creates a sub-directory called `pilot2wrappers` in the destination directory. Take note of that particular directory path on your system, as you will use this in the remaining procedures. In this example, the directory is located in the following path:
+
+``` sh
+C:\pilot4container_files\pilot2wrappers
+```
+
+The data files used by the application, as well as the container image instructions file called `Dockerfile.txt` will also need to be copied over to the `pilot4container_files` directory. Enter the following commands in the R console to copy the required files:
+
+``` r
+# copy data files
+file.copy(
+  from =  "C:/pilot4container/m5/datasets/rconsortiumpilot4/analysis/adam/datasets",
+  to = "C:/pilot4container_files",
+  recursive = TRUE
+)
+
+# copy container image instructions file
+file.copy(
+  from = "C:/pilot4container/m5/datasets/rconsortiumpilot4/analysis/adam/programs/Dockerfile.txt",
+  to = "C:/pilot4container_files"
+)
+```
+
+## Build Container Image
+
+Create the container image associated with the Shiny application with Docker using the following procedure:
+
+1. Open the Windows Powershell program by searching for Windows Powershell in the Windows Start menu.
+2. Change the current directory to the `pilot4container_files` directory by running the following command (substitute the `pilot4container_files` location for your appropriate directory as needed):
+
+``` sh
+Set-Location -Path "C:\pilot4container_files"
+```
+
+3. Create the container image file by running the following command:
+
+``` sh
+docker build `
+  --build-arg LOCAL_DATA_DIR=datasets `
+  --build-arg LOCAL_APP_DIR=pilot2wrappers `
+  -t RConsortium/submissions-pilot4-container:latest `
+  -f Dockerfile.txt .
+```
+
+::: callout-note
+Depending on network bandwidth and your computer's hardware profile, the process of building the Docker container image may require 5-10 minutes or longer to complete. Do not close the Powershell window during the process.
+:::
+
+## Run Shiny Application
+
+
+To run the Shiny application on your computer, in the same Powershell window run the following command:
 
 ```
 docker run -it --rm -p 8787:8787 RConsortium/submissions-pilot4-container:latest
 ```
 
+To view the application, launch a new web browser session in Microsoft Edge and paste the following address in the address bar:
+
+```
+http://127.0.0.1:8787
+```
 
 # Appendix 2: Application Usage Guide {.unnumbered}
 
