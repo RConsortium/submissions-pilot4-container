@@ -21,37 +21,34 @@ jobs:
           uses: quarto-dev/quarto-actions/setup@v2
           with:
             tinytex: true
-  
-        - name: Install font dependencies
-          id: install-fonts
-          uses: awalsh128/cache-apt-pkgs-action@latest
+        - name: Install Nix
+          uses: DeterminateSystems/nix-installer-action@main
           with:
-            packages: fonts-dejavu-core fonts-dejavu-extra
-            version: 1.0
-  
-        - name: Install R
-          uses: r-lib/actions/setup-r@v2
-          with:
-            r-version: '4.4.1'
-  
-        - name: Install R Dependencies
-          uses: r-lib/actions/setup-renv@v2
-          with:
-            cache-version: 1
+            logger: pretty
+            log-directives: nix_installer=trace
+            backtrace: full
+      
+        - name: Nix cache
+          uses: DeterminateSystems/magic-nix-cache-action@main
+    
+        - name: Build development environment
+          run: |
+            nix-build
   
         - name: Render ADRG PDF (custom)
           env: 
             QUARTO_PRINT_STACK: true
           run: |
-            quarto render adrg/adrg-quarto-pdf.qmd --to pdf
+            nix-shell --run "quarto render adrg/adrg-quarto-pdf.qmd --to pdf"
           shell: bash
   
-        - name: Publish ADRG HTML version to Quarto Pub
-          uses: quarto-dev/quarto-actions/publish@v2
-          with:
-            target: quarto-pub
-            path: adrg/adrg-quarto-html.qmd
+        - name: Publish ADRG HTML version to Quarto Pub (custom)
+          env:
             QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+          run: |
+            nix-shell --run "quarto publish quarto-pub adrg/adrg-quarto-html.qmd --no-browser"
+          shell: bash
+            
   
         - name: Set up object storage s3cmd cli tool
           uses: s3-actions/s3cmd@v1.6.1
@@ -61,8 +58,7 @@ jobs:
             access_key: ${{ secrets.S3_ACCESS_KEY }}
             secret_key: ${{ secrets.S3_SECRET_KEY }}
   
-        - name: Publish ADRG PDF version to Linode Object Storage
+        - name: Publish ADRG PDF version to Linode Object Storage (custom)
           run: |
             s3cmd put adrg/adrg-quarto-pdf.pdf --mime-type 'application/pdf' --acl-public s3://rsubmission-draft/adrg-quarto-pdf.pdf
-  
-  
+          shell: bash
