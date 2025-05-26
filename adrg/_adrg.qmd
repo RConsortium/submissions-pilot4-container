@@ -522,14 +522,14 @@ remotes::install_version("pkglite", version = "0.2.2")
 Use the `pkglite` package to unpack the Shiny application bundle `r1pkg.txt` within the Pilot 4 eCTD submission transfer. This file is located in the following relative path within the eCTD transfer directory:
 
 ``` sh
-m5\datasets\rconsortiumpilot4\analysis\adam\programs\r1pkg.txt
+m5\datasets\rconsortiumpilot4container\analysis\adam\programs\r1pkg.txt
 ```
 
 Enter the following command in the R console to extract the Shiny application files to the destination directory.
 
 ``` r
 pkglite::unpack(
-  input = "C:/pilot4container/m5/datasets/rconsortiumpilot4/analysis/adam/programs/r1pkg.txt", 
+  input = "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/r1pkg.txt", 
   output = "C:/pilot4container_files"
 )
 ```
@@ -545,14 +545,14 @@ The data files used by the application, as well as the container image instructi
 ``` r
 # copy data files
 file.copy(
-  from =  "C:/pilot4container/m5/datasets/rconsortiumpilot4/analysis/adam/datasets",
+  from =  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/datasets",
   to = "C:/pilot4container_files",
   recursive = TRUE
 )
 
 # copy container image instructions file
 file.copy(
-  from = "C:/pilot4container/m5/datasets/rconsortiumpilot4/analysis/adam/programs/Dockerfile.txt",
+  from = "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/Dockerfile.txt",
   to = "C:/pilot4container_files"
 )
 ```
