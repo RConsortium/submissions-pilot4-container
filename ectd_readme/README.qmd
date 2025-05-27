@@ -61,9 +61,8 @@ m5
                 │   ├── define.xml         # ADaM data define file
                 │   └── define2-0-0.xsl
                 └── programs
-                    ├── Dockerfile # Docker container build instructions
-                    ├── entrypoint.R # Utility R script to launch Shiny application in Docker
-                    ├── submissions-pilot2 # R code for Shiny application
+                    ├── Dockerfile.txt # Docker container build instructions
+                    └── r1pkg.txt
 ```
 
 Other files: (**Do not include in eCTD package**)
