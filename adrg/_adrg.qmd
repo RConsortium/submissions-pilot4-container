@@ -524,10 +524,10 @@ Enter the following command in the R console to extract the Shiny application fi
 
 ``` r
 # create application directory
-dir.create("C:/pilot4container_files")
+dir.create("C:/pilot4container_files/datasets/adam", recursive = TRUE)
 
 pkglite::unpack(
-  input = "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/r1pkg.txt", 
+  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/r1pkg.txt", 
   output = "C:/pilot4container_files"
 )
 ```
@@ -542,15 +542,20 @@ The data files used by the application, as well as the container image instructi
 
 ``` r
 # copy data files
-file.copy(
-  from =  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/datasets",
-  to = "C:/pilot4container_files",
-  recursive = TRUE
+data_files <- list.files(
+  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/datasets",
+  pattern = "*.xpt"
+)
+
+sapply(
+  data_files,
+  file.copy,
+  to = "C:/pilot4container_files/datasets/adam"
 )
 
 # copy container image instructions file
 file.copy(
-  from = "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/Dockerfile.txt",
+  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/Dockerfile.txt",
   to = "C:/pilot4container_files"
 )
 ```
@@ -582,16 +587,19 @@ Depending on network bandwidth and your computer's hardware profile, the process
 
 ## Run Shiny Application
 
-
 To run the Shiny application on your computer, in the same Powershell window run the following command:
 
-```
+``` sh
 docker run -it --rm -p 8787:8787 RConsortium/submissions-pilot4-container:latest
 ```
 
+::: callout-caution
+On certain installations of Windows, a Windows Security Alert may appear indicating that the Windows Defender Firewall has blocked features of the Docker Desktop backend on your computer's network. If this happens, click the **Allow access** button to give Docker permission to utilize your computer's network to run web-based applications. You will need to re-execute the container run command after enabling this access.
+:::
+
 To view the application, launch a new web browser session in Microsoft Edge and paste the following address in the address bar:
 
-```
+``` sh
 http://127.0.0.1:8787
 ```
 
