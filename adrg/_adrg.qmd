@@ -426,6 +426,10 @@ dir_df_kbl %>%
 
 To install and execute the Shiny application, follow all of the procedures below. Ensure that you note the location of where you downloaded the Pilot 4 eCTD submission files. For demonstration purposes, the procedures below assume the transfer has been saved to this location: `C:\pilot4container`.
 
+::: callout-note
+It is recommended to view this document in a dediciated PDF viewer application (such as Adobe Reader). When using a web browser such as Microsoft Edge or Google Chrome to view this file, certain commands are not able to be copied correctly while preserving line breaks or other formats, especially when pasting those commands in the Windows PowerShell terminal application.
+:::
+
 ## Windows Subsystem for Linux (WSL)
 
 ### Verification of WSL Availability
@@ -532,7 +536,7 @@ pkglite::unpack(
 )
 ```
 
-The console will display messages of unpacking and writing files to the destination directory. Note that the procedure creates a sub-directory called `pilot2wrappers` in the destination directory. Take note of that particular directory path on your system, as you will use this in the remaining procedures. In this example, the directory is located in the following path:
+The console will display messages of unpacking and writing files to the destination directory. Note that the procedure creates a sub-directory called `pilot2wrappers` in the destination directory. In this example, the directory is located in the following path:
 
 ``` sh
 C:\pilot4container_files\pilot2wrappers
