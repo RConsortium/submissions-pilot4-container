@@ -34,6 +34,21 @@ create_app_pkglite_bundle <- function(app_dir = "submissions-pilot2") {
     format = "binary",
     recursive = TRUE
   )
+
+  renv_spec4 <- pkglite::file_spec(
+    "renv",
+    pattern = "\\.dcf$",
+    format = "text",
+    recursive = FALSE
+  )
+
+  renv_spec5 <- pkglite::file_spec(
+    "renv",
+    pattern = "\\.gitignore",
+    format = "text",
+    recursive = FALSE,
+    all_files = TRUE
+  )
   
   golem_spec <- pkglite::file_spec(
     "dev",
@@ -60,6 +75,8 @@ create_app_pkglite_bundle <- function(app_dir = "submissions-pilot2") {
     renv_spec,
     renv_spec2,
     renv_spec3,
+    renv_spec4,
+    renv_spec5,
     golem_spec
   ) |>
     pkglite::pack(output = file.path("dev", "r1pkg.txt"))
