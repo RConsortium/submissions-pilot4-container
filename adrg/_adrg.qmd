@@ -544,7 +544,8 @@ The data files used by the application, as well as the container image instructi
 # copy data files
 data_files <- list.files(
   "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/datasets",
-  pattern = "*.xpt"
+  pattern = "*.xpt",
+  full.names = TRUE
 )
 
 sapply(
