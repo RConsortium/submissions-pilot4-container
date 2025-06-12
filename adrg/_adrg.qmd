@@ -608,6 +608,8 @@ To view the application, launch a new web browser session in Microsoft Edge and 
 http://127.0.0.1:8787
 ```
 
+ When you are ready to stop the application, return to the PowerShell window and press `Ctrl + C` on your keyboard.
+
 # Appendix 2: Application Usage Guide {.unnumbered}
 
 The Shiny application contains 5 tabs, with the first table **App Information** selected by default. The relationship between the other application tabs and previously submitted analysis from Pilot 1 are described in the table below:
