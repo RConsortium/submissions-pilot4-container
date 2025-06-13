@@ -526,6 +526,7 @@ m5\datasets\rconsortiumpilot4container\analysis\adam\programs\r1pkg.txt
 
 Enter the following command in the R console to extract the Shiny application files to the destination directory.
 
+::: {.content-visible when-format="html"}
 ``` r
 # create application directory
 dir.create("C:/pilot4container_files/datasets/adam", recursive = TRUE)
@@ -535,6 +536,21 @@ pkglite::unpack(
   output = "C:/pilot4container_files"
 )
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\scriptsize
+``` r
+# create application directory
+dir.create("C:/pilot4container_files/datasets/adam", recursive = TRUE)
+
+pkglite::unpack(
+  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/r1pkg.txt", 
+  output = "C:/pilot4container_files"
+)
+```
+\normalsize
+:::
 
 The console will display messages of unpacking and writing files to the destination directory. Note that the procedure creates a sub-directory called `pilot2wrappers` in the destination directory. In this example, the directory is located in the following path:
 
@@ -544,6 +560,7 @@ C:\pilot4container_files\pilot2wrappers
 
 The data files used by the application, as well as the container image instructions file called `Dockerfile.txt` will also need to be copied over to the `pilot4container_files` directory. Enter the following commands in the R console to copy the required files:
 
+::: {.content-visible when-format="html"}
 ``` r
 # copy data files
 data_files <- list.files(
@@ -564,6 +581,32 @@ file.copy(
   to = "C:/pilot4container_files"
 )
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\scriptsize
+``` r
+# copy data files
+data_files <- list.files(
+  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/datasets",
+  pattern = "*.xpt",
+  full.names = TRUE
+)
+
+sapply(
+  data_files,
+  file.copy,
+  to = "C:/pilot4container_files/datasets/adam"
+)
+
+# copy container image instructions file
+file.copy(
+  "C:/pilot4container/m5/datasets/rconsortiumpilot4container/analysis/adam/programs/Dockerfile.txt",
+  to = "C:/pilot4container_files"
+)
+```
+\normalsize
+:::
 
 ## Build Container Image
 
