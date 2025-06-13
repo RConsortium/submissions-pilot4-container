@@ -608,6 +608,10 @@ To view the application, launch a new web browser session in Microsoft Edge and 
 http://127.0.0.1:8787
 ```
 
+::: callout-note
+In the output of the `docker run` command, the R console from the Docker container will display a message `Listening on http://0.0.0.0:8787`, which is a different address than the address entered in the web browser (`http://127.0.0.1`). To facilite visiting the Shiny application using web browser installed on your Windows environment, the Docker container exposes the HTTP port `8787` to the host environment and the Shiny process is executed with the options `shiny.host = '0.0.0.0'` and `shiny.port = 8787`. If these configurations were not present, the host environment's web browser would not be able to access the Shiny application from the container.  
+:::
+
  When you are ready to stop the application, return to the PowerShell window and press `Ctrl + C` on your keyboard.
 
 # Appendix 2: Application Usage Guide {.unnumbered}
