@@ -22,17 +22,9 @@ To learn more about other pilots, visit [the R consortium R submission working g
 
 - Initial submission
 
-TBD
-  
-## Run Shiny Application
-
-To run the Pilot 4 Shiny application using web-assembly, you can follow the steps described in the [ADRG document](https://rsubmission-draft.us-east-1.linodeobjects.com/adrg-quarto-pdf.pdf). A web (HTML) version of the ADRG is also available at <https://rpodcast.quarto.pub/pilot4-container-adrg/>.
-
 ## Folder Structure 
 
 The folder is organized as a demo eCTD package following ICH guidance. 
-
-**TODO**: Revise
 
 eCTD package: 
 
@@ -76,4 +68,4 @@ The ECTD bundle and associated compiled application archive were last rendered o
 
 ## Questions 
 
-Report issues in <https://github.com/RConsortium/submissions-pilot4-container-to-fda/issues>
+Report issues in <https://github.com/RConsortium/submissions-pilot4-container/issues>
